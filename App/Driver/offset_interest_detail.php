@@ -50,10 +50,14 @@ if($amount_from < 0 || $amount_to < 0){
 $sql = "select * from offset_interest where update_date>".$date_from." AND update_date<".$date_to." AND amount>".$amount_from." AND amount<".$amount_to.";";
 $res = $db->select($sql);
 if(!$res){
-	echo '<script>alert("数据库操作错误");history.go(-1);</script>';
+	echo '<script>alert("查询结果为空");history.go(-1);</script>';
 	$db->close();
 	exit;
 }
+unset($_SESSION["filename"]);
+unset($_SESSION["csv_head"]);
+unset($_SESSION["csv_param"]);
+
 $filename = "补息明细——".date("Y-m-d",time());
 $_SESSION["filename"] = $filename;
 $csv_head = ["id","类型","金额","操作者","操作日期"];

@@ -2,5 +2,5 @@
 //退出
 session_start();
 unset($_SESSION['username']);
-$url = "../login.html";
+$url = "../login";
 Header("location: $url");

@@ -53,9 +53,9 @@ $map["create_date"] = $date;
 $map["update_date"] = $date;
 $res = $db->insert("offset_interest",$map);
 if(!$res){
-	echo '<script>alert("数据库操作失败");history.go(-1);</script>';
+	echo '<script>alert("更新数据库失败");history.go(-1);</script>';
 }else{
-	$_SESSION["param"] = "操作成功,余额是：".$amount;
+	$_SESSION["param"] = "操作成功,未补息操作的金额是：".($amount_sum-$amount);
 	echo '<script>location.href="../Layouts/result.php";</script>';
 }
 $db->close();

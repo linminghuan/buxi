@@ -23,18 +23,25 @@ EOF;
 		echo $db->lastErrorMsg();
 	}
 }
-/*$map["type"] = 1;
-$map["amount"] = 10000000000;
-$map["operator"] = "userA";
-$map["create_date"] = 1456735481;
-$map["update_date"] = 1456735481;
-$map["surplus"] = 10000000000;
-$map["offset_id"] = 1;
-$res = $db->insert($table_name,$map);
-if($res){
-	echo "insert";
-}else{
-	echo $db->lastErrorMsg();
+/*for ($i=0; $i < 50; $i++) {
+	$temp = rand(0,1);
+	$map["type"] = $temp;
+	$map["amount"] = 1000;
+	$map["operator"] = "userA";
+	$map["create_date"] = 1420070400 + $i*36000;
+	$map["update_date"] = 1420070400 + $i*36000;
+	if($i%2 == 1){
+		$map["surplus"] = 1000;
+	}else{
+		$map["surplus"] = 0;
+	}
+	$map["offset_id"] = 2;
+	$res = $db->insert($table_name,$map);
+	if($res){
+		echo "insert".$i;
+	}else{
+		echo $db->lastErrorMsg();
+	}
 }*/
 /*$sql = "update account set surplus = 100 where id=1;";
 $res = $db->exec($sql);

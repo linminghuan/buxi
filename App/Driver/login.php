@@ -1,5 +1,5 @@
 <?php
-require_once("../../Library/Auth/Auth.php");
+session_start();
 $table_name = "user";
 $dir = "../../Library/Db/Data/";
 require_once("../../Library/Db/connectDb.php");
@@ -17,11 +17,12 @@ if($username != ""){
 		if($password == $res[0]['password']){
 			$_SESSION["username"] = $username;
 			$_SESSION["operate_type"] = "";//为了结果页不报错所以在这里初始化这个session字段
-			Header("Location:../index.php");
-		}else{
-			echo '<script>alert("密码错误");location.href="../login.html";</script>';
+			echo '<script>alert("登陆成功");location.href="../index.php";</script>';
 			$db->close();
 			exit;
+		}else{
+			echo '<script>alert("密码错误");location.href="../login.html";</script>';
+			
 		}
 	}else{
 		echo '<script>alert("请输入密码");location.href="../login.html";</script>';

@@ -6,7 +6,7 @@ require_once("../Library/Db/connectDb.php");
 $amount = $_POST["amount"];
 $operate_type = $_POST["operate_type"];
 if($amount != ""){
-	if($operate_type == 0){
+	if($operate_type == "w"){
 		//判断余额是否足够
 		$sql = "select amount from account where type=1";
 		$res_arr_in = $db->select($sql);

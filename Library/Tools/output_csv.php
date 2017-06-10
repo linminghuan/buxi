@@ -21,6 +21,3 @@ header('Expires:0');
 header('Pragma:public'); 
 echo $csv;//把内容输出到缓冲区
 ob_end_flush();//冲刷缓冲区，并关闭缓冲
-unset($_SESSION["filename"]);
-unset($_SESSION["csv_head"]);
-unset($_SESSION["csv_param"]);

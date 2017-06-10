@@ -46,14 +46,16 @@ if($amount_from < 0 || $amount_to < 0){
 	$db->close();
 	exit;
 }
-//
-$sql = "select * from account where create_date>".$date_from." AND create_date<".$date_to." AND amount>".$amount_from." AND amount<".$amount_to.";";
+$sql = "select * from account where create_date>=".$date_from." AND create_date<=".$date_to." AND amount>=".$amount_from." AND amount<=".$amount_to.";";
 $res = $db->select($sql);
 if(!$res){
-	echo '<script>alert("操作数据库失败，请重试");location.href="../trade_record.php";</script>';
+	echo '<script>alert("数据查询结果为空");location.href="../trade_record.php";</script>';
 	$db->close();
 	exit;
 }
+unset($_SESSION["filename"]);
+unset($_SESSION["csv_head"]);
+unset($_SESSION["csv_param"]);
 //把本页的数据存到session中以便导出时调用
 $filename = "交易流水——".date("Y-m-d",$date_from)."~".date("Y-m-d",$date_to);
 $_SESSION["filename"] = $filename;
@@ -73,7 +75,7 @@ for ($i=0; $i < count($res); $i++) {
 		$map[3] = $res_rate[0]["rate"];
 		$map[4] = $res_rate[0]["p_rate"];
 	}else{
-		echo '<script>alert("数据库操作失败");history.go(-1);</script>';
+		echo '<script>alert("查询数据库失败");history.go(-1);</script>';
 		$db->close();
 		exit;
 	}

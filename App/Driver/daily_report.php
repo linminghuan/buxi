@@ -5,6 +5,7 @@ $dir = "../../Library/Db/Data/";
 require_once("../../Library/Db/connectDb.php");
 /*生成日报*/
 $date = $_POST["date"];
+$date = strtotime($date);//日期转时间戳
 //检查传进来的参数
 if($date == ""){
 	$date = time();
@@ -14,7 +15,7 @@ if($date == ""){
 $date_n = $date + 86400;//第二天的零点的时间戳
 $sql = "select amount,type from account where create_date>".$date." AND create_date<".$date_n.";";
 $res_a = $db->select($sql);//account表的结果集
-$sql = "select amount,type from offset_interest where create_date>".$date." AND create_date<".$date_n.";";
+$sql = "select amount,type from offset_interest where create_date>=".$date." AND create_date<".$date_n.";";
 $res_b = $db->select($sql);//offset_interest表的结果集
 /*if(!$res_a){
 	echo '<script>alert("操作数据库失败，请重试");location.href="../daily_report.php";</script>';
@@ -46,12 +47,16 @@ for($i = 0 ; $i < count($res_b) ; $i++){
 	}
 }
 $offset = $need_offset - $has_offset;
+unset($_SESSION["filename"]);
+unset($_SESSION["csv_head"]);
+unset($_SESSION["csv_param"]);
+
 //把本页的数据存到session中以便导出时调用
 $filename = "日报——".date("Y-m-d",$date);
 $_SESSION["filename"] = $filename;
-$csv_head = ["日期","存入金额","支取金额","未补息金额","已补息金额"];
+$csv_head = ["日期","本日存入金额","本日支取金额","本日未补息金额","本日已补息金额"];
 $_SESSION["csv_head"] = $csv_head;
-$csv_param_arr = [date("Y-m-d",$date),$in_amount,$out_amount,$offset,$has_offset];
+$csv_param_arr = [date("Y-m-d",$date),$in_amount,$out_amount,$need_offset,$has_offset];
 $csv_param = [$csv_param_arr];
 $_SESSION["csv_param"] = $csv_param;
 ?>
@@ -73,17 +78,19 @@ $_SESSION["csv_param"] = $csv_param;
 	<table border="1" cellspacing="0">
 		<tr>
 			<th>日期</th>
-			<th>存入金额</th>
-			<th>支取金额</th>
-			<th>未补息金额</th>
-			<th>已补息金额</th>
+			<th>本日存入金额</th>
+			<th>本日支取金额</th>
+			<th>本日未补息金额</th><!-- 
+			<th>本日未补息金额</th> -->
+			<th>本日补息操做金额</th>
 		</tr>
 		<?php
 			echo "<tr>";
 			echo "<td>".date("Y-m-d",$date)."</td>";
 			echo "<td>".$in_amount."</td>";
 			echo "<td>".$out_amount."</td>";
-			echo "<td>".$offset."</td>";
+			echo "<td>".$need_offset."</td>";
+			/*echo "<td>".$offset."</td>";*/
 			echo "<td>".$has_offset."</td>";			
 			echo "</tr>";
 		?>

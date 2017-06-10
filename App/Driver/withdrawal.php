@@ -57,7 +57,7 @@ if($amount != ""){
 			$where = "id=".$res_arr[$i]["id"];
 			$res = $db->update("account",$map,$where);
 			if(!$res){
-				echo '<script>alert("操作数据库失败，请重试");location.href="../withdrawal.php";</script>';
+				echo '<script>alert("更新数据库失败，请重试");location.href="../withdrawal.php";</script>';
 				$db->close();
 				exit;
 			}
@@ -69,12 +69,12 @@ if($amount != ""){
 			$sql = "select rate,p_rate from interest_rate where id=".$tmp_id.";";
 			$res_rate = $db->select($sql);
 			if(!$res_rate){
-				echo '<script>alert("操作数据库失败，请重试");location.href="../withdrawal.php";</script>';
+				echo '<script>alert("查询数据库失败，请重试");location.href="../withdrawal.php";</script>';
 				$db->close();
 				exit;
 			}else{
 				//需部分补息金额
-				$offset_amount = $offset_amount + $tmp_amount*($res_rate[$i]["p_rate"] - $res_rate[$i]["rate"])/360*$long;
+				$offset_amount = $offset_amount + $tmp_amount*($res_rate[0]["p_rate"] - $res_rate[0]["rate"])/360*$long;
 			}
 		}
 		//插入到补息表
@@ -89,7 +89,7 @@ if($amount != ""){
 		$map["update_date"] = $date;
 		$res = $db->insert("offset_interest",$map);
 		if(!$res){
-			echo '<script>alert("操作数据库失败，请重试");location.href="../withdrawal.php";</script>';
+			echo '<script>alert("更新数据库失败，请重试");location.href="../withdrawal.php";</script>';
 			$db->close();
 			exit;
 		}
@@ -107,7 +107,7 @@ if($amount != ""){
 		$map["offset_id"] = $res[0]["id"];
 		$res = $db->insert($table_name,$map);
 		if(!$res){
-			echo '<script>alert("操作失败，请重试");location.href="../withdrawal.php";</script>';
+			echo '<script>alert("更新数据库失败，请重试");location.href="../withdrawal.php";</script>';
 			$db->close();
 			exit;
 		}
@@ -116,7 +116,7 @@ if($amount != ""){
 		$db->close();
 		exit;
 	}else{
-		echo '<script>alert("操作失败，请重试");location.href="../withdrawal.php";</script>';
+		echo '<script>alert("查询数据库失败，请重试");location.href="../withdrawal.php";</script>';
 		$db->close();
 		exit;
 	}

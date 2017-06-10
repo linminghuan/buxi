@@ -22,14 +22,14 @@ EOF;
 		echo $db->lastErrorMsg();
 	}
 }
-/*$map["username"] = "userA";
+$map["username"] = "userA";
 $map["password"] = "123";
 $res = $db->insert($table_name,$map);
 var_dump($res);
 $map["username"] = "userB";
 $map["password"] = "123";
 $res = $db->insert($table_name,$map);
-var_dump($res);*/
+var_dump($res);
 $sql = "select * from user;";
 $res = $db->select($sql);
 var_dump($res);

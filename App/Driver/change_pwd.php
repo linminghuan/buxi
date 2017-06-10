@@ -21,7 +21,7 @@ if($new_pwd == ""){
 	$db->close();
 	exit;
 }else{
-	$length = strlen($old_pwd);
+	$length = strlen($new_pwd);
 	if($length < 6){
 		echo '<script>alert("密码长度不能小于6");history.go(-1);</script>';
 		$db->close();
@@ -35,15 +35,16 @@ if($new_pwd == ""){
 $sql = "select password from user where username = '".$username."';";
 $res = $db->select($sql);
 if(!$res){
-	echo '<script>alert("数据库操作失误");history.go(-1);</script>';
+	echo '<script>alert("用户名不存在");history.go(-1);</script>';
 	$db->close();
 	exit;
 }
 if($old_pwd == $res[0]["password"]){
 	$map["password"] = $new_pwd;
-	$res1 = $db->update("user",$map);
+	$where = "username='".$username."'";
+	$res1 = $db->update("user",$map,$where);
 	if(!$res1){
-		echo '<script>alert("密码错误");history.go(-1);</script>';
+		echo '<script>alert("修改失败");history.go(-1);</script>';
 		$db->close();
 		exit;
 	}else{

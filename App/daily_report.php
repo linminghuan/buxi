@@ -16,7 +16,7 @@ require_once("../Library/Auth/Auth.php");
 	<h1>日报</h1>
 	<form action="Driver/daily_report.php" method="post">
 		<br>
-		<label>输入时间段</label>
+		<label>输入日期</label>
 		<input type="date" name="date"><br><br>
 		<input type="submit" value="查询">
 	</form>

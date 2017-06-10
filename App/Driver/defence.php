@@ -16,7 +16,7 @@ if($sub_pwd == ""){
 	$db->close();
 	exit;
 }
-$sql = "select * from user ;";
+$sql = "select * from user;";
 $res = $db->select($sql);
 if(!$res){
 	echo '<script>alert("数据库操作失败");location.href="../defence.php";</script>';
